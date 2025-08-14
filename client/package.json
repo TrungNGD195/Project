@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "migration:generate": "typeorm migration:generate -n CreateUsersTable -d src/data-source.ts",
+    "migration:run": "typeorm migration:run -d src/data-source.ts",
+    "migration:revert": "typeorm migration:revert -d src/data-source.ts"
+  }
+}

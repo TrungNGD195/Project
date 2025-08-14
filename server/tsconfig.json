@@ -1,0 +1,36 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "moduleResolution": "node",
+  // removed resolvePackageJsonExports (needs node16/nodenext moduleResolution)
+    "esModuleInterop": true,  // Cấu hình để hỗ trợ interop với module ES.
+    "isolatedModules": true,
+    "declaration": true,  // Tạo các file .d.ts cho các module của bạn.
+    "removeComments": true,  // Loại bỏ các comment trong các file output.
+    "emitDecoratorMetadata": true,  // Bật metadata decorator cho NestJS.
+    "experimentalDecorators": true,  // Bật hỗ trợ decorators.
+    "allowSyntheticDefaultImports": true,  // Cho phép import mặc định từ module CommonJS.
+  "target": "ES2020",  // Lower target for broader Node compatibility.
+    "sourceMap": true,  // Tạo source maps cho dễ debug.
+    "outDir": "./dist",  // Đường dẫn thư mục đầu ra cho các tệp biên dịch.
+    "baseUrl": "./",  // Đảm bảo rằng thư mục gốc được chỉ định đúng.
+    "incremental": true,  // Tăng tốc quá trình biên dịch.
+    "skipLibCheck": true,  // Bỏ qua kiểm tra các tệp thư viện.
+    "strictNullChecks": true,  // Kiểm tra chặt chẽ giá trị null/undefined.
+    "forceConsistentCasingInFileNames": true,  // Kiểm tra chữ hoa/thường trong tên tệp.
+    "noImplicitAny": false,  // Không kiểm tra kiểu `any` (tuỳ vào dự án có thể bật hoặc tắt).
+    "strictBindCallApply": false,  // Bỏ kiểm tra strict cho các phương thức `bind`, `call`, `apply`.
+    "noFallthroughCasesInSwitch": false,  // Không báo lỗi nếu case trong switch không có `break`.
+    "types": ["node"],  // Đảm bảo TypeScript nhận diện các đối tượng Node.js, bao gồm `process`.
+    "paths": {
+      "*": ["node_modules/*"]  // Đảm bảo rằng TypeScript có thể tìm thấy các module Node.js.
+    }
+  },
+  "include": [
+    "src/**/*"  // Bao gồm tất cả các tệp TypeScript trong thư mục `src`.
+  ],
+  "exclude": [
+  "node_modules",
+  "src/**/*.spec.ts"
+  ]
+}
