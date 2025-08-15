@@ -5,9 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './stratergies/jwt.stratergy';
+import { PassportModule } from '@nestjs/passport';
+import { GoogleStrategy } from './stratergies/google.strategy';
 
 @Module({
   imports: [
+    PassportModule.register({ session: false }),
     TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: process.env.JWT_SECRET || 'dev_secret',
@@ -15,7 +18,7 @@ import { JwtStrategy } from './stratergies/jwt.stratergy';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy, GoogleStrategy],
   exports: [AuthService],
 })
 export class AuthModule {}

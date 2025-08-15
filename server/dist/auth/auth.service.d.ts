@@ -3,6 +3,7 @@ import { User } from '../users/entities/user.entity';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
+import { GoogleProfilePayload } from './stratergies/google.strategy';
 export declare class AuthService {
     private readonly usersRepo;
     private readonly jwt;
@@ -29,4 +30,13 @@ export declare class AuthService {
         success: boolean;
     }>;
     private buildAuthResponse;
+    oauthLogin(google: GoogleProfilePayload): Promise<{
+        accessToken: string;
+        user: {
+            id: string;
+            email: string;
+            full_name: string;
+            role: string;
+        };
+    }>;
 }

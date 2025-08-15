@@ -25,4 +25,6 @@ export declare class AuthController {
     logout(): Promise<{
         success: boolean;
     }>;
+    googleAuth(): void;
+    googleCallback(req: any, res: any): Promise<any>;
 }

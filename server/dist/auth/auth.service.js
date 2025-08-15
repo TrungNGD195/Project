@@ -93,6 +93,21 @@ let AuthService = class AuthService {
             },
         };
     }
+    async oauthLogin(google) {
+        if (!google.email)
+            throw new common_1.BadRequestException('Google account has no email');
+        let user = await this.usersRepo.findOne({ where: { email: google.email } });
+        if (!user) {
+            user = this.usersRepo.create({
+                email: google.email,
+                full_name: google.full_name || 'Google User',
+                password: await bcrypt.genSalt(10),
+                role: 'user',
+            });
+            await this.usersRepo.save(user);
+        }
+        return this.buildAuthResponse(user);
+    }
 };
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([

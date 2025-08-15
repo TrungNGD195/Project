@@ -10,6 +10,7 @@ import { CreateUserDto } from '../users/dto/create-user.dto';
 import { LoginDto } from './dto/login.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { GoogleProfilePayload } from './stratergies/google.strategy';
 
 @Injectable()
 export class AuthService {
@@ -54,5 +55,22 @@ export class AuthService {
         role: user.role,
       },
     };
+  }
+
+  async oauthLogin(google: GoogleProfilePayload) {
+    if (!google.email)
+      throw new BadRequestException('Google account has no email');
+    let user = await this.usersRepo.findOne({ where: { email: google.email } });
+    if (!user) {
+      user = this.usersRepo.create({
+        email: google.email,
+        full_name: google.full_name || 'Google User',
+        // random placeholder password; user won't use password login
+        password: await bcrypt.genSalt(10),
+        role: 'user',
+      });
+      await this.usersRepo.save(user);
+    }
+    return this.buildAuthResponse(user);
   }
 }
