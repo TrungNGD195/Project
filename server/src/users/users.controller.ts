@@ -6,12 +6,15 @@ import {
   Param,
   Patch,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service'; // Import service để xử lý logic
 import { CreateUserDto } from './dto/create-user.dto'; // Import DTO nếu có
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('users')
+@UseGuards(AuthGuard('jwt'))
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

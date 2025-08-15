@@ -29,7 +29,10 @@ let TasksService = class TasksService {
         return this.repo.find({ relations: ['creator'] });
     }
     async findOne(id) {
-        const task = await this.repo.findOne({ where: { id }, relations: ['creator'] });
+        const task = await this.repo.findOne({
+            where: { id },
+            relations: ['creator'],
+        });
         if (!task)
             throw new common_1.NotFoundException('Task not found');
         return task;

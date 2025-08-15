@@ -1,5 +1,10 @@
 import { useState, useCallback } from "react";
-import { register, login, logout, type AuthUser } from "../api/authApi";
+import {
+  register as apiRegister,
+  login as apiLogin,
+  logout as apiLogout,
+  type AuthUser,
+} from "../api/authApi";
 import { setUser, getUser } from "../store/authStore";
 
 export function useAuth() {
@@ -12,12 +17,12 @@ export function useAuth() {
     setUserState(u);
   };
 
-  const doRegister = useCallback(
+  const register = useCallback(
     async (data: { full_name: string; email: string; password: string }) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await register(data);
+        const res = await apiRegister(data);
         sync(res.user, res.accessToken);
         return res.user;
       } catch (e: any) {
@@ -30,12 +35,12 @@ export function useAuth() {
     []
   );
 
-  const doLogin = useCallback(
+  const login = useCallback(
     async (data: { email: string; password: string }) => {
       setLoading(true);
       setError(null);
       try {
-        const res = await login(data);
+        const res = await apiLogin(data);
         sync(res.user, res.accessToken);
         return res.user;
       } catch (e: any) {
@@ -48,17 +53,10 @@ export function useAuth() {
     []
   );
 
-  const doLogout = useCallback(async () => {
-    await logout();
+  const logout = useCallback(async () => {
+    await apiLogout();
     sync(null, "");
   }, []);
 
-  return {
-    user,
-    loading,
-    error,
-    register: doRegister,
-    login: doLogin,
-    logout: doLogout,
-  };
+  return { user, loading, error, login, register, logout };
 }

@@ -48,7 +48,11 @@ const tasks_module_1 = require("./tasks/tasks.module");
 const users_module_1 = require("./users/users.module");
 const typeorm_1 = require("@nestjs/typeorm");
 const path = __importStar(require("path"));
+const logger_middleware_1 = require("./common/middleware/logger.middleware");
 let AppModule = class AppModule {
+    configure(consumer) {
+        consumer.apply(logger_middleware_1.LoggerMiddleware).forRoutes('*');
+    }
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([

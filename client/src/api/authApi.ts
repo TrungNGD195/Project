@@ -5,16 +5,19 @@ export interface RegisterPayload {
   email: string;
   password: string;
 }
+
 export interface LoginPayload {
   email: string;
   password: string;
 }
+
 export interface AuthUser {
   id: string;
   email: string;
   full_name: string;
   role: string;
 }
+
 export interface AuthResponse {
   accessToken: string;
   user: AuthUser;
@@ -36,7 +39,7 @@ export async function logout(): Promise<void> {
   try {
     await api.post("/auth/logout");
   } catch {
-    /* ignore */
+    // ignore
   } finally {
     setAccessToken(null);
   }

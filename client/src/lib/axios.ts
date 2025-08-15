@@ -1,7 +1,12 @@
-import axios, { AxiosError, type AxiosInstance } from "axios";
+import axios, {
+  AxiosError,
+  type AxiosInstance,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from "axios";
 
 const api: AxiosInstance = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: (import.meta as any).env?.VITE_API_URL || "http://localhost:3000",
   headers: { "Content-Type": "application/json" },
 });
 
@@ -11,10 +16,12 @@ export const setAccessToken = (token: string | null) => {
 };
 export const getAccessToken = () => accessToken;
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   if (accessToken) {
-    config.headers = config.headers || {};
-    (config.headers as any).Authorization = `Bearer ${accessToken}`;
+    config.headers = config.headers || ({} as AxiosRequestConfig["headers"]);
+    (config.headers as Record<string, string>)[
+      "Authorization"
+    ] = `Bearer ${accessToken}`;
   }
   return config;
 });
